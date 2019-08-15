@@ -1,0 +1,23 @@
+// ==UserScript==
+// @name         Kurage Bunch of Downloads
+// @namespace    https://github.com/EternalBiscuit/kuragebunch-download-page/
+// @version      0.1
+// @description  Getting a manga page in kuragebunch, click once on a page
+// @author       EternalBiscuit
+// @match        https://kuragebunch.com/episode*
+// @grant        none
+// @require      https://code.jquery.com/jquery-3.2.1.min.js
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    setInterval(function(){
+        $("#page-viewer canvas").each(function(i){
+            if ($(this).parent().parent().attr("download") === undefined){
+                let pageData = $(this)[0].toDataURL();
+                let pageName = i.toString();
+                pageName = pageName.padStart(3, '0');
+                $(this).parent().wrap("<a class='download' href='" + pageData + "' download='" + pageName + "' download></a>");
+            }
+        })}, 3000);
+})();
